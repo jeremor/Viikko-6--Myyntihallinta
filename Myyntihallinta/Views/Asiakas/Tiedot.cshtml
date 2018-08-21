@@ -1,0 +1,91 @@
+﻿@model Myyntihallinta.Models.Asiakas
+
+@{
+    ViewBag.Title = "Tiedot";
+}
+
+<h2>Tiedot</h2>
+
+<div>
+    <h4>Asiakas</h4>
+    <hr />
+    @if (Model == null)
+    {
+        <p>Asiakasta ei ole</p>
+    }
+    
+    <dl class="dl-horizontal">
+        @Html.Partial("_Asiakas", Model)
+        @*<dt>
+            @Html.DisplayNameFor(model => model.asiakas_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.asiakas_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sukunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sukunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.osoite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.osoite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postinumero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postinumero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postitoimipaikka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postitoimipaikka)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.syntymäaika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.syntymäaika)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.luottoraja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.luottoraja)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")*@
+    @Html.ActionLink("Asiakkaan tilaukset", "Tilaushistoria", new { id = Model.asiakas_id})
+    <br /> 
+    Asiakkaalla on @Html.Action("TilaustenLukumaara", new {id = Model.asiakas_id }) tilausta.
+</p>

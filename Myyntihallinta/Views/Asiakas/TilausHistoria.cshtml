@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Myyntihallinta.Models.TilaushistoriaRivi>
+
+
+@{
+    ViewBag.Title = "TilausHistoria";
+}
+
+<h2>TilausHistoria</h2>
+
+<p>
+    Asiakas: @ViewBag.Asiakas.sukunimi @ViewBag.Asiakas.etunimi
+</p>
+
+<p>
+    @Html.ActionLink("Palaa asiakastietoihin", "Tiedot")
+</p>
+<p>
+    Tilausten yhteishinta <b> @Model.Sum(p => p.Laskutus) €</b>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pvm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lkm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Laskutus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tuote)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pvm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lkm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Laskutus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tuote)
+            </td>
+
+        </tr>
+    }
+
+</table>

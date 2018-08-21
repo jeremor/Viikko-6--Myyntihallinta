@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MyyntiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asiakas">
+          <Key>
+            <PropertyRef Name="asiakas_id" />
+          </Key>
+          <Property Name="asiakas_id" Type="int" Nullable="false" />
+          <Property Name="sukunimi" Type="varchar" MaxLength="30" />
+          <Property Name="etunimi" Type="varchar" MaxLength="30" />
+          <Property Name="osoite" Type="varchar" MaxLength="30" />
+          <Property Name="postinumero" Type="char" MaxLength="5" />
+          <Property Name="postitoimipaikka" Type="varchar" MaxLength="20" />
+          <Property Name="syntymäaika" Type="date" />
+          <Property Name="luottoraja" Type="int" />
+        </EntityType>
+        <EntityType Name="Tilaus">
+          <Key>
+            <PropertyRef Name="tilaus_id" />
+          </Key>
+          <Property Name="tilaus_id" Type="int" Nullable="false" />
+          <Property Name="asiakas_id" Type="int" />
+          <Property Name="tilausPvm" Type="date" />
+          <Property Name="toimitusPvm" Type="date" />
+          <Property Name="tilaussumma" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="TilausRivi">
+          <Key>
+            <PropertyRef Name="tilaus_id" />
+            <PropertyRef Name="rivinro" />
+          </Key>
+          <Property Name="tilaus_id" Type="int" Nullable="false" />
+          <Property Name="rivinro" Type="int" Nullable="false" />
+          <Property Name="tuote_id" Type="int" Nullable="false" />
+          <Property Name="tilausLkm" Type="int" />
+          <Property Name="ahinta" Type="decimal" Precision="7" Scale="2" />
+          <Property Name="alennus" Type="decimal" Precision="7" Scale="2" />
+        </EntityType>
+        <EntityType Name="Tuote">
+          <Key>
+            <PropertyRef Name="tuote_id" />
+          </Key>
+          <Property Name="tuote_id" Type="int" Nullable="false" />
+          <Property Name="nimi" Type="varchar" MaxLength="50" />
+          <Property Name="tyyppi" Type="varchar" MaxLength="30" />
+          <Property Name="tuoteryhmä" Type="varchar" MaxLength="30" />
+          <Property Name="hinta" Type="decimal" Precision="7" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Tilaus_Asiakas">
+          <End Role="Asiakas" Type="Self.Asiakas" Multiplicity="0..1" />
+          <End Role="Tilaus" Type="Self.Tilaus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asiakas">
+              <PropertyRef Name="asiakas_id" />
+            </Principal>
+            <Dependent Role="Tilaus">
+              <PropertyRef Name="asiakas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TilausRivi_Tilaus">
+          <End Role="Tilaus" Type="Self.Tilaus" Multiplicity="1" />
+          <End Role="TilausRivi" Type="Self.TilausRivi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tilaus">
+              <PropertyRef Name="tilaus_id" />
+            </Principal>
+            <Dependent Role="TilausRivi">
+              <PropertyRef Name="tilaus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TilausRivi_Tuote">
+          <End Role="Tuote" Type="Self.Tuote" Multiplicity="1" />
+          <End Role="TilausRivi" Type="Self.TilausRivi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tuote">
+              <PropertyRef Name="tuote_id" />
+            </Principal>
+            <Dependent Role="TilausRivi">
+              <PropertyRef Name="tuote_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyyntiDBModelStoreContainer">
+          <EntitySet Name="Asiakas" EntityType="Self.Asiakas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tilaus" EntityType="Self.Tilaus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TilausRivi" EntityType="Self.TilausRivi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tuote" EntityType="Self.Tuote" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tilaus_Asiakas" Association="Self.FK_Tilaus_Asiakas">
+            <End Role="Asiakas" EntitySet="Asiakas" />
+            <End Role="Tilaus" EntitySet="Tilaus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TilausRivi_Tilaus" Association="Self.FK_TilausRivi_Tilaus">
+            <End Role="Tilaus" EntitySet="Tilaus" />
+            <End Role="TilausRivi" EntitySet="TilausRivi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TilausRivi_Tuote" Association="Self.FK_TilausRivi_Tuote">
+            <End Role="Tuote" EntitySet="Tuote" />
+            <End Role="TilausRivi" EntitySet="TilausRivi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyyntiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Asiakas">
+          <Key>
+            <PropertyRef Name="asiakas_id" />
+          </Key>
+          <Property Name="asiakas_id" Type="Int32" Nullable="false" />
+          <Property Name="sukunimi" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="etunimi" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="osoite" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="postinumero" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="postitoimipaikka" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="syntymäaika" Type="DateTime" Precision="0" />
+          <Property Name="luottoraja" Type="Int32" />
+          <NavigationProperty Name="Tilaus" Relationship="Self.FK_Tilaus_Asiakas" FromRole="Asiakas" ToRole="Tilaus" />
+        </EntityType>
+        <EntityType Name="Tilaus">
+          <Key>
+            <PropertyRef Name="tilaus_id" />
+          </Key>
+          <Property Name="tilaus_id" Type="Int32" Nullable="false" />
+          <Property Name="asiakas_id" Type="Int32" />
+          <Property Name="tilausPvm" Type="DateTime" Precision="0" />
+          <Property Name="toimitusPvm" Type="DateTime" Precision="0" />
+          <Property Name="tilaussumma" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Asiakas" Relationship="Self.FK_Tilaus_Asiakas" FromRole="Tilaus" ToRole="Asiakas" />
+          <NavigationProperty Name="TilausRivi" Relationship="Self.FK_TilausRivi_Tilaus" FromRole="Tilaus" ToRole="TilausRivi" />
+        </EntityType>
+        <EntityType Name="TilausRivi">
+          <Key>
+            <PropertyRef Name="tilaus_id" />
+            <PropertyRef Name="rivinro" />
+          </Key>
+          <Property Name="tilaus_id" Type="Int32" Nullable="false" />
+          <Property Name="rivinro" Type="Int32" Nullable="false" />
+          <Property Name="tuote_id" Type="Int32" Nullable="false" />
+          <Property Name="tilausLkm" Type="Int32" />
+          <Property Name="ahinta" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="alennus" Type="Decimal" Precision="7" Scale="2" />
+          <NavigationProperty Name="Tilaus" Relationship="Self.FK_TilausRivi_Tilaus" FromRole="TilausRivi" ToRole="Tilaus" />
+          <NavigationProperty Name="Tuote" Relationship="Self.FK_TilausRivi_Tuote" FromRole="TilausRivi" ToRole="Tuote" />
+        </EntityType>
+        <EntityType Name="Tuote">
+          <Key>
+            <PropertyRef Name="tuote_id" />
+          </Key>
+          <Property Name="tuote_id" Type="Int32" Nullable="false" />
+          <Property Name="nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tyyppi" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="tuoteryhmä" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="hinta" Type="Decimal" Precision="7" Scale="2" />
+          <NavigationProperty Name="TilausRivi" Relationship="Self.FK_TilausRivi_Tuote" FromRole="Tuote" ToRole="TilausRivi" />
+        </EntityType>
+        <Association Name="FK_Tilaus_Asiakas">
+          <End Role="Asiakas" Type="Self.Asiakas" Multiplicity="0..1" />
+          <End Role="Tilaus" Type="Self.Tilaus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asiakas">
+              <PropertyRef Name="asiakas_id" />
+            </Principal>
+            <Dependent Role="Tilaus">
+              <PropertyRef Name="asiakas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TilausRivi_Tilaus">
+          <End Role="Tilaus" Type="Self.Tilaus" Multiplicity="1" />
+          <End Role="TilausRivi" Type="Self.TilausRivi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tilaus">
+              <PropertyRef Name="tilaus_id" />
+            </Principal>
+            <Dependent Role="TilausRivi">
+              <PropertyRef Name="tilaus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TilausRivi_Tuote">
+          <End Role="Tuote" Type="Self.Tuote" Multiplicity="1" />
+          <End Role="TilausRivi" Type="Self.TilausRivi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tuote">
+              <PropertyRef Name="tuote_id" />
+            </Principal>
+            <Dependent Role="TilausRivi">
+              <PropertyRef Name="tuote_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyyntiDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Asiakkaat" EntityType="Self.Asiakas" />
+          <EntitySet Name="Tilaukset" EntityType="Self.Tilaus" />
+          <EntitySet Name="TilausRivit" EntityType="Self.TilausRivi" />
+          <EntitySet Name="Tuotteet" EntityType="Self.Tuote" />
+          <AssociationSet Name="FK_Tilaus_Asiakas" Association="Self.FK_Tilaus_Asiakas">
+            <End Role="Asiakas" EntitySet="Asiakkaat" />
+            <End Role="Tilaus" EntitySet="Tilaukset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TilausRivi_Tilaus" Association="Self.FK_TilausRivi_Tilaus">
+            <End Role="Tilaus" EntitySet="Tilaukset" />
+            <End Role="TilausRivi" EntitySet="TilausRivit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TilausRivi_Tuote" Association="Self.FK_TilausRivi_Tuote">
+            <End Role="Tuote" EntitySet="Tuotteet" />
+            <End Role="TilausRivi" EntitySet="TilausRivit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyyntiDBModelStoreContainer" CdmEntityContainer="MyyntiDBEntities">
+          <EntitySetMapping Name="Asiakkaat">
+            <EntityTypeMapping TypeName="MyyntiDBModel.Asiakas">
+              <MappingFragment StoreEntitySet="Asiakas">
+                <ScalarProperty Name="asiakas_id" ColumnName="asiakas_id" />
+                <ScalarProperty Name="sukunimi" ColumnName="sukunimi" />
+                <ScalarProperty Name="etunimi" ColumnName="etunimi" />
+                <ScalarProperty Name="osoite" ColumnName="osoite" />
+                <ScalarProperty Name="postinumero" ColumnName="postinumero" />
+                <ScalarProperty Name="postitoimipaikka" ColumnName="postitoimipaikka" />
+                <ScalarProperty Name="syntymäaika" ColumnName="syntymäaika" />
+                <ScalarProperty Name="luottoraja" ColumnName="luottoraja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tilaukset">
+            <EntityTypeMapping TypeName="MyyntiDBModel.Tilaus">
+              <MappingFragment StoreEntitySet="Tilaus">
+                <ScalarProperty Name="tilaus_id" ColumnName="tilaus_id" />
+                <ScalarProperty Name="asiakas_id" ColumnName="asiakas_id" />
+                <ScalarProperty Name="tilausPvm" ColumnName="tilausPvm" />
+                <ScalarProperty Name="toimitusPvm" ColumnName="toimitusPvm" />
+                <ScalarProperty Name="tilaussumma" ColumnName="tilaussumma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TilausRivit">
+            <EntityTypeMapping TypeName="MyyntiDBModel.TilausRivi">
+              <MappingFragment StoreEntitySet="TilausRivi">
+                <ScalarProperty Name="tilaus_id" ColumnName="tilaus_id" />
+                <ScalarProperty Name="rivinro" ColumnName="rivinro" />
+                <ScalarProperty Name="tuote_id" ColumnName="tuote_id" />
+                <ScalarProperty Name="tilausLkm" ColumnName="tilausLkm" />
+                <ScalarProperty Name="ahinta" ColumnName="ahinta" />
+                <ScalarProperty Name="alennus" ColumnName="alennus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tuotteet">
+            <EntityTypeMapping TypeName="MyyntiDBModel.Tuote">
+              <MappingFragment StoreEntitySet="Tuote">
+                <ScalarProperty Name="tuote_id" ColumnName="tuote_id" />
+                <ScalarProperty Name="nimi" ColumnName="nimi" />
+                <ScalarProperty Name="tyyppi" ColumnName="tyyppi" />
+                <ScalarProperty Name="tuoteryhmä" ColumnName="tuoteryhmä" />
+                <ScalarProperty Name="hinta" ColumnName="hinta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

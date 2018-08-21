@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Myyntihallinta.Models.Tuote>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nimi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tyyppi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tuoteryhmä)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hinta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tyyppi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tuoteryhmä)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hinta)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.tuote_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.tuote_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.tuote_id })
+        </td>
+    </tr>
+}
+
+</table>

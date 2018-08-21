@@ -1,0 +1,68 @@
+﻿@model Myyntihallinta.Models.Asiakas
+
+<div>
+    <h4>Asiakas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sukunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sukunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.osoite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.osoite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postinumero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postinumero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postitoimipaikka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postitoimipaikka)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.syntymäaika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.syntymäaika)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.luottoraja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.luottoraja)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.asiakas_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
